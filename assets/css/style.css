@@ -1,0 +1,42 @@
+header{
+    display: flex;
+    justify-content:space-between;
+    margin: 10px;
+}
+
+nav{
+    font-size: 24px;
+}
+
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section{
+    display: flex;
+    background-color:bisque;
+    padding: 10%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: content-box;
+}
+
+#quiz-start h1{
+    color:seagreen;
+    font-size: 72px;
+}
+
+#quiz-start p{
+    font-size: 24px;
+    font-weight: bolder;
+    margin: 5%;
+}
+
+#quiz-start button{
+    font-size: 48px;
+    padding: 0px 10% 0px 10%;
+    margin: 5%;
+}
