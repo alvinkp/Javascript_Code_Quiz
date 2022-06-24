@@ -32,14 +32,15 @@ function removeElements(myElementToClear){
 
 myQuizStart.onclick = function(event) {
     var answerBtn = event.target;
-    if(answerBtn.className === "ignore"){
+
+    if(answerBtn.className === "correct"){
+        console.log("Correct answer chosen");
+    }else if(answerBtn.className === "wrong"){
+        console.log("Wrong Answer!");
+    }else{
         return;
     }
-    else if(answerBtn.className === "correct"){
-        console.log("Correct answer chosen");
-    }else{
-        console.log("Wrong Answer!");
-    }
+    return;
 }
 
 function flagCorrectButton(index){
@@ -47,6 +48,8 @@ function flagCorrectButton(index){
     for(var i = 0; i < myButtons.length; i++){
         if(myButtons[i].textContent === myQAArray[index].correct){
             myButtons[i].setAttribute("class", "correct");
+        }else{
+            myButtons[i].setAttribute("class", "wrong");
         }
     }
     return;
