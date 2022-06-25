@@ -9,6 +9,7 @@ var myQuizContainer = document.querySelector("#quiz");
 var myTimer = document.querySelector(".timer");
 var timeRemaining = 120;
 var pauseTimer = false;
+var answerAttempt = false;
 
 // Question and Answer Object Array
 var myQAArray = [
@@ -23,9 +24,6 @@ var myQAArray = [
 {question:"What does the isNaN() function do?", answer1: "Adds two numbers together", answer2:"Checks if a value is a Number", answer3:"Checks if a value is bread", answer4:"Returns the Next Available Number", correct:"Checks if a value is a Number"},
 {question:"An 'else if' statement is used to: ", answer1: "specify a new condition to test, if the first condition is false", answer2:"to specify many alternative blocks of code to be executed", answer3:"Check if an integer is greater than 10", answer4:"Check if a user enters a name in a form", correct:"specify a new condition to test, if the first condition is false"}
 ];
-
-//Cloned MQAArray and shuffle it
-var myTempQAArray = JSON.parse(JSON.stringify(myQAArray));
 
 // ************************************** from W3DOCS: https://www.w3docs.com/snippets/javascript/how-to-randomize-shuffle-a-javascript-array.html
 function shuffleArray(array) {
@@ -44,6 +42,16 @@ function shuffleArray(array) {
   }
 
 //-------------------------------------------- Functions -----------------------------------------------------------------------
+
+// Prep questions Array
+function setupTempArray(){
+    var tempArray = JSON.parse(JSON.stringify(myQAArray));
+    shuffleArray(tempArray);
+    return tempArray;
+}
+
+// Store shuffled array
+var myTempQAArray = setupTempArray();
 
 //Creates and adds an element to an existing element in the document. (myElementType = html element you want to create ::string::, myElementToAppend = html element you want to attach the newly created element to ::string::, myText = the content you want to exist in the element that you created ::string::) 
 function addToElement(myElementType, myElementToAppend, myText){
@@ -66,17 +74,21 @@ function removeElements(myElementToClear){
 myQuizContainer.onclick = function(event) {
     var answerBtn = event.target;
 
-    if(answerBtn.id === "correct"){
-        console.log("Correct answer chosen");
-        answerBtn.setAttribute('class', 'expand');
-        correctAnswer();
-    }else if(answerBtn.id === "wrong"){
-        console.log("Wrong Answer!");
-        wrongAnswer();
-        answerBtn.setAttribute('class', 'shake');
-        shakeTimer(answerBtn);
-    }else{
-        return;
+    if (!answerAttempt) {
+        if (answerBtn.id === "correct") {
+            console.log("Correct answer chosen");
+            answerAttempt = true;
+            answerBtn.setAttribute('class', 'expand');
+            correctAnswer();
+        } else if (answerBtn.id === "wrong") {
+            console.log("Wrong Answer!");
+            answerAttempt = true;
+            wrongAnswer();
+            answerBtn.setAttribute('class', 'shake');
+            shakeTimer(answerBtn);
+        } else {
+            return;
+        }
     }
     return;
 }
@@ -102,14 +114,19 @@ function shakeTimer(targetButton) {
 
 // Timer for button shake
 function stopButtonShake(buttonToShake){
-buttonToShake.classList.remove('shake');
-return;
+    buttonToShake.classList.remove('shake');
+    return;
 }
 
 // Deduct time for incorrect answers
 function wrongAnswer(){
     timeRemaining -= 5;
+    if(timeRemaining === 0 || timeRemaining < 0){
+    endOfQuizScreen(false);
+    } else {
     myTimer.children[0].textContent = timeRemaining;
+    answerAttempt = false;
+    }
 }
 
 // Next Question for Choosing a Correct answer
@@ -135,6 +152,7 @@ function correctAnswer(){
             generateQuestion();
             pauseTimer = false;
             startQuizTimer();
+            answerAttempt = false;
             }
         }, 1000);
     }
@@ -146,13 +164,27 @@ function startQuizTimer(){
     myTimer.children[0].textContent = timeRemaining;
     var quizTimer = setInterval(function() {
     timeRemaining--;
-
-    if(timeRemaining === 0 || pauseTimer){
+    
+    if(pauseTimer){
         clearInterval(quizTimer);
-        console.log("Time's UP!");
-    }else{
-        myTimer.children[0].textContent = timeRemaining;
+    }else {
+        if(timeRemaining === 0 || timeRemaining < 0){
+            clearInterval(quizTimer);
+            console.log("Time's UP!");
+            var delay = 1;
+            var delayTimer = setInterval(function() {
+            delay--;
+            if (delay === 0){
+            clearInterval(delayTimer);
+            endOfQuizScreen(false);
+            }
+        }, 1000);
+
+        }else{
+            myTimer.children[0].textContent = timeRemaining;
+        }
     }
+    
 
 }, 1000);
 return;
@@ -194,7 +226,6 @@ function generateQuestion(){
 
 // Start timer and generate first question
 function startQuiz(){
-    shuffleArray(myTempQAArray);
     generateQuestion();
     startQuizTimer();
 }
@@ -209,19 +240,38 @@ function createQuiz(){
     return;
 }
 
+// Resets the quiz if the player wants to try again
+function resetQuiz(){
+    removeElements(myQuizContainer);
+    myTempQAArray = setupTempArray();
+    myTimer.setAttribute('class', 'hidden');
+    timeRemaining = 120;
+    answerAttempt = false;
+    createQuiz();
+}
+
 // End of Quiz Screen
 function endOfQuizScreen(finishedInTime){
     removeElements(myQuizContainer);
-    if(finishedInTime){
-    addToElement("h1", myQuizContainer, "Congratulations! You've finished the Quiz!");
-    addToElement("p", myQuizContainer, "Here's how you did!");
-    addToElement("p", myQuizContainer, timeRemaining);
-    addToElement("button", myQuizContainer, "Play Again");
-    }
     
-
+    if(finishedInTime){
+        addToElement("h1", myQuizContainer, "Congratulations! You've finished the Quiz!");
+        addToElement("p", myQuizContainer, "Here's how you did!");
+        addToElement("p", myQuizContainer, timeRemaining);
+        addToElement("button", myQuizContainer, "Play Again");
+        myQuizContainer.lastElementChild.setAttribute("id", "ignore");
+        myQuizContainer.lastElementChild.setAttribute('onclick', 'resetQuiz()');
+    } else {
+        myTimer.setAttribute('class', 'hidden');
+        addToElement("h1", myQuizContainer, "You ran out of time!");
+        addToElement("p", myQuizContainer, "Study hard and try again!");
+        addToElement("button", myQuizContainer, "Play Again");
+        myQuizContainer.lastElementChild.setAttribute("id", "ignore");
+        myQuizContainer.lastElementChild.setAttribute('onclick', 'resetQuiz()');
+    }
+    return;
 }
 
 
-// Setup main section
+// Setup the quiz
 createQuiz();
