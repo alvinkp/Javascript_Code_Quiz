@@ -1,3 +1,7 @@
+.hidden{
+    display: none;
+}
+
 header{
     display: flex;
     justify-content:space-between;
@@ -24,23 +28,24 @@ section{
     box-sizing: content-box;
 }
 
-#quiz-start h1{
+#quiz h1{
     color:seagreen;
-    font-size: 72px;
+    font-size: 48px;
 }
 
-#quiz-start p{
+#quiz p{
     font-size: 24px;
     font-weight: bolder;
     margin: 5%;
 }
 
-#quiz-start button{
-    font-size: 48px;
+#quiz button{
+    font-size: 30px;
     padding: 0px 10% 0px 10%;
     margin: 5%;
 }
 
+/* Play shake animation for anything that has the shake class */
 .shake{
     animation-name: shake-error;
     animation-duration: .25s;
@@ -53,4 +58,18 @@ section{
     50%{transform: translateX(5px);}
     75%{transform: translateX(-5px);}
     100%{transform: translateX(5px);}
+}
+
+/* Play expand and shrink animation for correct answer */
+.expand{
+    animation-name: expand-success;
+    animation-duration: .5s;
+    animation-iteration-count: 1;
+}
+
+@keyframes expand-success{
+    0%{transform: scale(100%);}
+    25%{transform: scale(85%);}
+    50%{transform: scale(110%);}
+    100%{transform: scale(100%);}
 }

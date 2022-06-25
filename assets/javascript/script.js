@@ -1,10 +1,14 @@
 //-------------------------------------- Global Variables ---------------------------------------------------------------------
 
+//Audio files
+// var audioBtnError = 
+// var audioBtnSuccess =
+
 //Stored HTML Elements Declarations
-var myQuizStart = document.querySelector("#quiz-start");
-var myQuestion = document.querySelector("#display-question");
-var myQuizEnd = document.querySelector("#quiz-end");
-var myHighScore = document.querySelector("#highscore");
+var myQuizContainer = document.querySelector("#quiz");
+var myTimer = document.querySelector(".timer");
+var timeRemaining = 120;
+var pauseTimer = false;
 
 // Question and Answer Object Array
 var myQAArray = [
@@ -19,6 +23,25 @@ var myQAArray = [
 {question:"What does the isNaN() function do?", answer1: "Adds two numbers together", answer2:"Checks if a value is a Number", answer3:"Checks if a value is bread", answer4:"Returns the Next Available Number", correct:"Checks if a value is a Number"},
 {question:"An 'else if' statement is used to: ", answer1: "specify a new condition to test, if the first condition is false", answer2:"to specify many alternative blocks of code to be executed", answer3:"Check if an integer is greater than 10", answer4:"Check if a user enters a name in a form", correct:"specify a new condition to test, if the first condition is false"}
 ];
+
+//Cloned MQAArray and shuffle it
+var myTempQAArray = JSON.parse(JSON.stringify(myQAArray));
+
+// ************************************** from W3DOCS: https://www.w3docs.com/snippets/javascript/how-to-randomize-shuffle-a-javascript-array.html
+function shuffleArray(array) {
+    var curId = array.length;
+    // There remain elements to shuffle
+    while (0 !== curId) {
+      // Pick a remaining element
+      var randId = Math.floor(Math.random() * curId);
+      curId -= 1;
+      // Swap it with the current element.
+      var tmp = array[curId];
+      array[curId] = array[randId];
+      array[randId] = tmp;
+    }
+    return array;
+  }
 
 //-------------------------------------------- Functions -----------------------------------------------------------------------
 
@@ -39,14 +62,17 @@ function removeElements(myElementToClear){
     return;
 }
 
-//Event Delegate for myQuizStart
-myQuizStart.onclick = function(event) {
+//Event Delegate for myQuizContainer
+myQuizContainer.onclick = function(event) {
     var answerBtn = event.target;
 
     if(answerBtn.id === "correct"){
         console.log("Correct answer chosen");
+        answerBtn.setAttribute('class', 'expand');
+        correctAnswer();
     }else if(answerBtn.id === "wrong"){
         console.log("Wrong Answer!");
+        wrongAnswer();
         answerBtn.setAttribute('class', 'shake');
         shakeTimer(answerBtn);
     }else{
@@ -55,7 +81,7 @@ myQuizStart.onclick = function(event) {
     return;
 }
 
-
+// Handle Shake animation
 function shakeTimer(targetButton) {
     var secondsLeft = 2;
     // Sets interval in variable
@@ -70,46 +96,130 @@ function shakeTimer(targetButton) {
       }
   
     }, 250);
+    return;
   }
 
 
 // Timer for button shake
 function stopButtonShake(buttonToShake){
-console.log("Shaking!")
 buttonToShake.classList.remove('shake');
+return;
 }
 
-// 
-function flagCorrectButton(index){
+// Deduct time for incorrect answers
+function wrongAnswer(){
+    timeRemaining -= 5;
+    myTimer.children[0].textContent = timeRemaining;
+}
+
+// Next Question for Choosing a Correct answer
+function correctAnswer(){
+    if(myTempQAArray.length === 0){
+        console.log("array has " + myTempQAArray.length + "questions left")
+        var delay = 1;
+        var delayTimer = setInterval(function() {
+        delay--;
+            if (delay === 0){
+            clearInterval(delayTimer);
+            pauseTimer = true;
+            endOfQuizScreen(true);
+            }
+        }, 1000);
+    } else {
+        pauseTimer = true;
+        var delay = 1;
+        var delayTimer = setInterval(function() {
+        delay--;
+            if (delay === 0){
+            clearInterval(delayTimer);
+            generateQuestion();
+            pauseTimer = false;
+            startQuizTimer();
+            }
+        }, 1000);
+    }
+}
+
+// Timer for Quiz
+function startQuizTimer(){
+    myTimer.classList.remove('hidden');
+    myTimer.children[0].textContent = timeRemaining;
+    var quizTimer = setInterval(function() {
+    timeRemaining--;
+
+    if(timeRemaining === 0 || pauseTimer){
+        clearInterval(quizTimer);
+        console.log("Time's UP!");
+    }else{
+        myTimer.children[0].textContent = timeRemaining;
+    }
+
+}, 1000);
+return;
+}
+
+
+// Removes question and answers object from myTempQAArray
+function removeQuestionFromArray(arrayToEdit){
+    arrayToEdit.shift();
+}
+
+// assign "correct" or "wrong" id's to buttons
+function flagCorrectButton(){
     var myButtons = document.querySelectorAll("button");
     for(var i = 0; i < myButtons.length; i++){
-        if(myButtons[i].textContent === myQAArray[index].correct){
+        if(myButtons[i].textContent === myTempQAArray[0].correct){
             myButtons[i].setAttribute("id", "correct");
         }else{
             myButtons[i].setAttribute("id", "wrong");
         }
     }
+    removeQuestionFromArray(myTempQAArray);
+    console.log(myTempQAArray.length);
     return;
 }
 
-function generateQuestion(myQAIndex){
-    removeElements(myQuizStart);
-    addToElement("h1", myQuizStart, myQAArray[myQAIndex].question);
-    var answersArray = [myQAArray[myQAIndex].answer1, myQAArray[myQAIndex].answer2, myQAArray[myQAIndex].answer3, myQAArray[myQAIndex].answer4];
+
+// Generate the Question and Display it on the page along with the Answer Buttons
+function generateQuestion(){
+    removeElements(myQuizContainer);
+    addToElement("h1", myQuizContainer, myTempQAArray[0].question);
+    var answersArray = [myTempQAArray[0].answer1, myTempQAArray[0].answer2, myTempQAArray[0].answer3, myTempQAArray[0].answer4];
     for(var i = 0; i < 4; i++){
-        addToElement("button", myQuizStart, answersArray[i]);
+        addToElement("button", myQuizContainer, answersArray[i]);
     }
-    flagCorrectButton(myQAIndex);
+    flagCorrectButton();
     return;
 }
 
+// Start timer and generate first question
+function startQuiz(){
+    shuffleArray(myTempQAArray);
+    generateQuestion();
+    startQuizTimer();
+}
+
+// Create the start screen for the quiz
 function createQuiz(){
-    addToElement("h1", myQuizStart, "Alvin's Javascript Quiz!");
-    addToElement("p", myQuizStart, "Try to answer code related questions within the time limit!");
-    addToElement("button", myQuizStart, "Start!");
-    myQuizStart.lastElementChild.setAttribute("id", "ignore");
-    myQuizStart.lastElementChild.setAttribute('onclick', 'generateQuestion(Math.floor(Math.random() * myQAArray.length))');
+    addToElement("h1", myQuizContainer, "Alvin's Javascript Quiz!");
+    addToElement("p", myQuizContainer, "Try to answer code related questions within the time limit!");
+    addToElement("button", myQuizContainer, "Start!");
+    myQuizContainer.lastElementChild.setAttribute("id", "ignore");
+    myQuizContainer.lastElementChild.setAttribute('onclick', 'startQuiz()');
     return;
+}
+
+// End of Quiz Screen
+function endOfQuizScreen(finishedInTime){
+    removeElements(myQuizContainer);
+    if(finishedInTime){
+    addToElement("h1", myQuizContainer, "Congratulations! You've finished the Quiz!");
+    addToElement("p", myQuizContainer, "Here's how you did!");
+    addToElement("p", myQuizContainer, timeRemaining);
+    addToElement("button", myQuizContainer, "Play Again");
+    }
+    
+
 }
 
 
