@@ -40,3 +40,17 @@ section{
     padding: 0px 10% 0px 10%;
     margin: 5%;
 }
+
+.shake{
+    animation-name: shake-error;
+    animation-duration: .25s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake-error{
+    0%{transform: translateX(5px);}
+    25%{transform: translateX(-5px);}
+    50%{transform: translateX(5px);}
+    75%{transform: translateX(-5px);}
+    100%{transform: translateX(5px);}
+}
