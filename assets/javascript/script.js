@@ -10,6 +10,8 @@ var myTimer = document.querySelector(".timer");
 var timeRemaining = 120;
 var pauseTimer = false;
 var answerAttempt = false;
+var myFirstTPoint;
+var mySecondTPoint;
 
 
 // Question and Answer Object Array
@@ -174,10 +176,11 @@ function changeTimerColor(color){
 
 // Set transition points for timer colors
 function setTPoints(){
-    var myFirstTPoint = Math.floor(timeRemaining * .66);
+    myFirstTPoint = Math.floor(timeRemaining * .66);
     console.log(myFirstTPoint);
-    var mySecondTPoint = Math.floor(timeRemaining * .33);
+    mySecondTPoint = Math.floor(timeRemaining * .33);
     console.log(mySecondTPoint);
+    return;
 }
 
 // Timer for Quiz
