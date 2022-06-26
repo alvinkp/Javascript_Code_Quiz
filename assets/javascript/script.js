@@ -11,6 +11,7 @@ var timeRemaining = 120;
 var pauseTimer = false;
 var answerAttempt = false;
 
+
 // Question and Answer Object Array
 var myQAArray = [
 {question:"How do you print to the console?", answer1: "console.log", answer2:"print:", answer3:"console.print", answer4:"print.console", correct: "console.log"}, 
@@ -22,7 +23,7 @@ var myQAArray = [
 {question:"How do you add an item to the end of an array?", answer1: "array.addEnd(item)", answer2:"array.slice(item)", answer3:"array.unshift(item)", answer4:"array.push(item)", correct:"array.push(item)"},
 {question:"Which of the following is not a feature of Javascript?", answer1: "Lightweight", answer2:"Complementary to HTML", answer3:"Statically Typed", answer4:"Open Source Cross-Platform", correct:"Statically Typed"},
 {question:"What does the isNaN() function do?", answer1: "Adds two numbers together", answer2:"Checks if a value is a Number", answer3:"Checks if a value is bread", answer4:"Returns the Next Available Number", correct:"Checks if a value is a Number"},
-{question:"An 'else if' statement is used to: ", answer1: "specify a new condition to test, if the first condition is false", answer2:"to specify many alternative blocks of code to be executed", answer3:"Check if an integer is greater than 10", answer4:"Check if a user enters a name in a form", correct:"specify a new condition to test, if the first condition is false"}
+{question:"An ' else if ' statement is used to: ", answer1: "specify a new condition to test, if the first condition is false", answer2:"to specify many alternative blocks of code to be executed", answer3:"Check if an integer is greater than 10", answer4:"Check if a user enters a name in a form", correct:"specify a new condition to test, if the first condition is false"}
 ];
 
 // ************************************** from W3DOCS: https://www.w3docs.com/snippets/javascript/how-to-randomize-shuffle-a-javascript-array.html
@@ -124,7 +125,7 @@ function wrongAnswer(){
     if(timeRemaining === 0 || timeRemaining < 0){
     endOfQuizScreen(false);
     } else {
-    myTimer.children[0].textContent = timeRemaining;
+    myTimer.children[0].textContent = "Time left: " + timeRemaining;
     answerAttempt = false;
     }
 }
@@ -158,10 +159,31 @@ function correctAnswer(){
     }
 }
 
+// Change timer background color
+function changeTimerColor(color){
+    if(color === "green"){
+        myTimer.setAttribute("class", "change-color-green");
+    } else if(color === "yellow") {
+        myTimer.classList.remove('change-color-green');
+        myTimer.setAttribute("class", "change-color-yellow");
+    } else {
+        myTimer.classList.remove('change-color-yellow');
+        myTimer.setAttribute("class" ,"change-color-red")
+    }
+}
+
+// Set transition points for timer colors
+function setTPoints(){
+    var myFirstTPoint = Math.floor(timeRemaining * .66);
+    console.log(myFirstTPoint);
+    var mySecondTPoint = Math.floor(timeRemaining * .33);
+    console.log(mySecondTPoint);
+}
+
 // Timer for Quiz
 function startQuizTimer(){
     myTimer.classList.remove('hidden');
-    myTimer.children[0].textContent = timeRemaining;
+    myTimer.children[0].textContent = "Time left: " + timeRemaining;
     var quizTimer = setInterval(function() {
     timeRemaining--;
     
@@ -180,12 +202,17 @@ function startQuizTimer(){
             }
         }, 1000);
 
-        }else{
-            myTimer.children[0].textContent = timeRemaining;
+        }else {
+            myTimer.children[0].textContent = "Time left: " + timeRemaining;
+            if(timeRemaining > myFirstTPoint){
+                changeTimerColor("green");
+            } else if (timeRemaining > mySecondTPoint){
+                changeTimerColor("yellow");
+            } else if(timeRemaining < mySecondTPoint){
+                changeTimerColor("red");
+            }
         }
     }
-    
-
 }, 1000);
 return;
 }
@@ -227,6 +254,9 @@ function generateQuestion(){
 // Start timer and generate first question
 function startQuiz(){
     generateQuestion();
+    setTPoints();
+    myTimer.setAttribute("class", "change-color-green");
+    pauseTimer = false;
     startQuizTimer();
 }
 
@@ -247,20 +277,44 @@ function resetQuiz(){
     myTimer.setAttribute('class', 'hidden');
     timeRemaining = 120;
     answerAttempt = false;
+    myTimer.setAttribute("class", "hidden");
     createQuiz();
+}
+
+// add High Score to local storage
+function addToHS(button){
+console.log("Posted to Local Storage");
+button.setAttribute('class', 'expand');
+document.querySelector("#hs-form").remove();
+addToElement("button", myQuizContainer, "Play Again");
+myQuizContainer.lastElementChild.setAttribute("id", "ignore");
+myQuizContainer.lastElementChild.setAttribute('onclick', 'resetQuiz()');
+}
+
+// Show form for highscore
+function CreateHighscoreForm(){
+    addToElement("div", myQuizContainer,"");
+    var myDiv = myQuizContainer.lastElementChild;
+    myDiv.setAttribute("id", "hs-form");
+    addToElement("form", myDiv, "Enter your name here: ");
+    var myForm = myQuizContainer.lastElementChild;
+    myForm.setAttribute("method", "get");
+    addToElement("input", myForm, "");
+    addToElement("button", myForm, "Submit");
+    myFormButton = myForm.lastElementChild;
+    myFormButton.setAttribute("onclick", "addToHS(myFormButton)");
 }
 
 // End of Quiz Screen
 function endOfQuizScreen(finishedInTime){
     removeElements(myQuizContainer);
-    
+
     if(finishedInTime){
         addToElement("h1", myQuizContainer, "Congratulations! You've finished the Quiz!");
         addToElement("p", myQuizContainer, "Here's how you did!");
         addToElement("p", myQuizContainer, timeRemaining);
-        addToElement("button", myQuizContainer, "Play Again");
-        myQuizContainer.lastElementChild.setAttribute("id", "ignore");
-        myQuizContainer.lastElementChild.setAttribute('onclick', 'resetQuiz()');
+        CreateHighscoreForm();
+        
     } else {
         myTimer.setAttribute('class', 'hidden');
         addToElement("h1", myQuizContainer, "You ran out of time!");

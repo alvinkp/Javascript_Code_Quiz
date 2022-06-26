@@ -2,47 +2,108 @@
     display: none;
 }
 
-header{
-    display: flex;
-    justify-content:space-between;
-    margin: 10px;
-}
-
-nav{
-    font-size: 24px;
+body{
+    background-color:white;
 }
 
 main{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
 }
 
-section{
+#timer-and-quiz{
     display: flex;
-    background-color:bisque;
-    padding: 10%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+}
+
+.change-color-green h2{
+    background-color: seagreen;
+    color:white;
+    font-size: 36px;
+    padding: 10px;
+    border-radius: 25px;
+    margin: 10px;
+}
+
+.change-color-yellow h2{
+    background-color: yellow;
+    color:black;
+    font-size: 36px;
+    padding: 10px;
+    border-radius: 25px;
+    margin: 10px;
+}
+
+.change-color-red h2{
+    background-color: tomato;
+    color: white;
+    font-size: 36px;
+    padding: 10px;
+    border-radius: 25px;
+    margin: 10px;
+}
+
+#highscore-box{
+    display: flex;
+    height: 100%;
+    width: 10%;
+    justify-content: center;
+    text-align: center;
+}
+
+#quiz{
+    height: 100%;
+    display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
-    box-sizing: content-box;
 }
 
 #quiz h1{
-    color:seagreen;
+    color:dodgerblue;
     font-size: 48px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 #quiz p{
     font-size: 24px;
     font-weight: bolder;
-    margin: 5%;
+    margin-bottom: 20px;
 }
 
 #quiz button{
     font-size: 30px;
-    padding: 0px 10% 0px 10%;
-    margin: 5%;
+    width: 50%;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: dodgerblue;
+    color:white;
+    border-radius: 10px;
+}
+
+#hs-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+#hs-form button{
+    font-size: 20px;
+    background-color: dodgerblue;
+    color: white;
+    border-radius: 10px;
+    padding: 0px 5px 0px 5px;
+    margin: 0%;
+}
+
+#quiz form{
+    display: table;
 }
 
 /* Play shake animation for anything that has the shake class */
