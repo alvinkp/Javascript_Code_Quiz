@@ -5,14 +5,15 @@
 // var audioBtnSuccess =
 
 //Stored HTML Elements Declarations
+var myHighScoreList = document.querySelector("#score-container");
 var myQuizContainer = document.querySelector("#quiz");
 var myTimer = document.querySelector(".timer");
+var myLastAttempt = document.querySelector("#spacer");
 var timeRemaining = 120;
 var pauseTimer = false;
 var answerAttempt = false;
 var myFirstTPoint;
 var mySecondTPoint;
-
 
 // Question and Answer Object Array
 var myQAArray = [
@@ -56,6 +57,7 @@ function setupTempArray(){
 // Store shuffled array
 var myTempQAArray = setupTempArray();
 
+
 //Creates and adds an element to an existing element in the document. (myElementType = html element you want to create ::string::, myElementToAppend = html element you want to attach the newly created element to ::string::, myText = the content you want to exist in the element that you created ::string::) 
 function addToElement(myElementType, myElementToAppend, myText){
     var myTempElement = document.createElement(myElementType)
@@ -79,12 +81,12 @@ myQuizContainer.onclick = function(event) {
 
     if (!answerAttempt) {
         if (answerBtn.id === "correct") {
-            console.log("Correct answer chosen");
+            // console.log("Correct answer chosen");
             answerAttempt = true;
             answerBtn.setAttribute('class', 'expand');
             correctAnswer();
         } else if (answerBtn.id === "wrong") {
-            console.log("Wrong Answer!");
+            // console.log("Wrong Answer!");
             answerAttempt = true;
             wrongAnswer();
             answerBtn.setAttribute('class', 'shake');
@@ -106,7 +108,6 @@ function shakeTimer(targetButton) {
       if(secondsLeft === 0) {
         // Stops execution of action at set interval
         clearInterval(timerInterval);
-        // Calls function to create and append image
         stopButtonShake(targetButton);
       }
   
@@ -135,7 +136,7 @@ function wrongAnswer(){
 // Next Question for Choosing a Correct answer
 function correctAnswer(){
     if(myTempQAArray.length === 0){
-        console.log("array has " + myTempQAArray.length + "questions left")
+        // console.log("array has " + myTempQAArray.length + "questions left")
         var delay = 1;
         var delayTimer = setInterval(function() {
         delay--;
@@ -177,9 +178,9 @@ function changeTimerColor(color){
 // Set transition points for timer colors
 function setTPoints(){
     myFirstTPoint = Math.floor(timeRemaining * .66);
-    console.log(myFirstTPoint);
+    // console.log(myFirstTPoint);
     mySecondTPoint = Math.floor(timeRemaining * .33);
-    console.log(mySecondTPoint);
+    // console.log(mySecondTPoint);
     return;
 }
 
@@ -195,7 +196,7 @@ function startQuizTimer(){
     }else {
         if(timeRemaining === 0 || timeRemaining < 0){
             clearInterval(quizTimer);
-            console.log("Time's UP!");
+            // console.log("Time's UP!");
             var delay = 1;
             var delayTimer = setInterval(function() {
             delay--;
@@ -237,7 +238,7 @@ function flagCorrectButton(){
         }
     }
     removeQuestionFromArray(myTempQAArray);
-    console.log(myTempQAArray.length);
+    // console.log(myTempQAArray.length);
     return;
 }
 
@@ -254,6 +255,7 @@ function generateQuestion(){
     return;
 }
 
+
 // Start timer and generate first question
 function startQuiz(){
     generateQuestion();
@@ -263,8 +265,23 @@ function startQuiz(){
     startQuizTimer();
 }
 
+// Check for existing local storage
+function verifyLocalStorageExists(){
+    if(localStorage.getItem("highScore") === null){
+        return false;
+    }else{
+        return true;
+    }
+}
+
 // Create the start screen for the quiz
 function createQuiz(){
+    var scoreArray = JSON.parse(localStorage.getItem("highScore"));
+        if(verifyLocalStorageExists()){
+            if (scoreArray.length > 0){
+                updateHighScoreElement();
+            }
+        }
     addToElement("h1", myQuizContainer, "Alvin's Javascript Quiz!");
     addToElement("p", myQuizContainer, "Try to answer code related questions within the time limit!");
     addToElement("button", myQuizContainer, "Start!");
@@ -284,14 +301,75 @@ function resetQuiz(){
     createQuiz();
 }
 
+// Reset High Scores 
+function resetHighScores(){
+localStorage.clear();
+removeElements(myHighScoreList);
+myLastAttempt.firstElementChild.setAttribute('class', 'hidden');
+}
+
+// Update HighScore Element
+function updateHighScoreElement(){
+    var myScoreArray = JSON.parse(localStorage.getItem("highScore"));
+    removeElements(myHighScoreList);
+    for(var i = 0; i < myScoreArray.length; i++){
+        addToElement("li", myHighScoreList, myScoreArray[i].name + ": " + myScoreArray[i].score);
+    }
+}
+
+// Return Top Ten Highscore
+function setTopTenScores(scores){
+    while(scores.length > 10){
+        scores.pop();
+    }
+    return;
+}
+
+// Prepare HighScore Array for localstorage
+function prepHSArray(newEntry){
+    var existingHighScore = JSON.parse(localStorage.getItem("highScore"));
+    console.log(verifyLocalStorageExists());
+    if(verifyLocalStorageExists()){
+        // console.log("hello");
+        if(existingHighScore.length > 0){
+            var tempHSArray = [];
+            for(var i = 0; i < existingHighScore.length; i++){
+                tempHSArray.push(existingHighScore[i]);
+            }
+        }
+        var highScore = {
+            name: newEntry,
+            score: timeRemaining + 1
+        }
+        tempHSArray.unshift(highScore);
+        tempHSArray.sort(function(a, b){return b.score - a.score;});
+        setTopTenScores(tempHSArray);
+        localStorage.setItem("highScore", JSON.stringify(tempHSArray));
+        updateHighScoreElement();    
+        showLastAttempt(highScore);
+    } else{
+        var tempHSArray = [];
+        var highScore = {
+            name: newEntry,
+            score: timeRemaining + 1
+        }
+        tempHSArray.push(highScore);
+        localStorage.setItem("highScore", JSON.stringify(tempHSArray));
+        updateHighScoreElement();
+        showLastAttempt(highScore);
+    }
+}
+
 // add High Score to local storage
-function addToHS(button){
-console.log("Posted to Local Storage");
-button.setAttribute('class', 'expand');
-document.querySelector("#hs-form").remove();
-addToElement("button", myQuizContainer, "Play Again");
-myQuizContainer.lastElementChild.setAttribute("id", "ignore");
-myQuizContainer.lastElementChild.setAttribute('onclick', 'resetQuiz()');
+    function addToHS(){
+    var input = document.querySelector("input");
+    prepHSArray(input.value);
+
+    document.querySelector("#hs-form").remove();
+    addToElement("button", myQuizContainer, "Play Again");
+    
+    myQuizContainer.lastElementChild.setAttribute("id", "ignore");
+    myQuizContainer.lastElementChild.setAttribute('onclick', 'resetQuiz()');
 }
 
 // Show form for highscore
@@ -299,13 +377,25 @@ function CreateHighscoreForm(){
     addToElement("div", myQuizContainer,"");
     var myDiv = myQuizContainer.lastElementChild;
     myDiv.setAttribute("id", "hs-form");
+    
     addToElement("form", myDiv, "Enter your name here: ");
     var myForm = myQuizContainer.lastElementChild;
     myForm.setAttribute("method", "get");
     addToElement("input", myForm, "");
     addToElement("button", myForm, "Submit");
     myFormButton = myForm.lastElementChild;
-    myFormButton.setAttribute("onclick", "addToHS(myFormButton)");
+    myFormButton.setAttribute("onclick", "addToHS()");
+}
+
+// Show last attempt
+function showLastAttempt(attempt){
+    if(myLastAttempt.firstElementChild.hasAttribute('class','hidden')){
+        myLastAttempt.firstElementChild.classList.remove('hidden');
+    }
+    if(myLastAttempt.lastElementChild.children.length > 0){
+        removeElements(myLastAttempt.lastElementChild);
+    }
+    addToElement("h4", myLastAttempt.lastElementChild, attempt.name + ": " + attempt.score);
 }
 
 // End of Quiz Screen

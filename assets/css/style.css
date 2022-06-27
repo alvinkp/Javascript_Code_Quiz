@@ -16,7 +16,7 @@ main{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 90%;
+    width: 50%;
 }
 
 .change-color-green h2{
@@ -49,9 +49,19 @@ main{
 #highscore-box{
     display: flex;
     height: 100%;
-    width: 10%;
-    justify-content: center;
+    width: 25%;
+    justify-content: flex-start;
     text-align: center;
+    flex-direction: column;
+}
+
+#score-container{
+    flex-direction: column;
+}
+
+#score-container li{
+    list-style: none;
+    margin: 0%;
 }
 
 #quiz{
@@ -104,6 +114,13 @@ main{
 
 #quiz form{
     display: table;
+}
+
+#spacer{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Play shake animation for anything that has the shake class */

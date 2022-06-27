@@ -15,10 +15,16 @@
     <main>
         <section id="highscore-box">
             <h2>High Scores</h2>
+            <div id="score-container"></div>
+            <button onclick="resetHighScores()">Reset Scores</button>
         </section>
         <div id = "timer-and-quiz">
         <div class="timer change-color-green hidden"><h2><span id="time-left"></span></h2></div>
         <section id="quiz"></section>
+        </div>
+        <section id="spacer">
+            <h3 class="hidden">Last Attempt</h3>
+            <div id="last-attempt"></div>
         </div>
     </main>
 
