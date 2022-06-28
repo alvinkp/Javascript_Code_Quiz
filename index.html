@@ -7,24 +7,39 @@
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <title>Javascript Code Quiz</title>
 </head>
 
 <body>
     <!-- Main content for quiz goes here -->
-    <main>
-        <section id="highscore-box">
-            <h2>High Scores</h2>
-            <div id="score-container"></div>
-            <button onclick="resetHighScores()">Reset Scores</button>
-        </section>
-        <div id = "timer-and-quiz">
-        <div class="timer change-color-green hidden"><h2><span id="time-left"></span></h2></div>
-        <section id="quiz"></section>
-        </div>
-        <section id="spacer">
-            <h3 class="hidden">Last Attempt</h3>
-            <div id="last-attempt"></div>
+    <div id="wrapper">
+        <main>
+            <div id="highscore-wrapper" >
+                <section id="highscore-box">
+                    <h2>High Scores</h2>
+                    <div id="score-container"></div>
+                    <button onclick="resetHighScores()">Reset</button>
+                </section>
+            </div>
+                <div id = "timer-and-quiz">
+                    <div class = "timer-wrapper">
+                        <div class="timer change-color-green hidden">
+                            <h2>
+                                <span id="time-left"></span>
+                            </h2>
+                        </div>
+                    </div>    
+                <section id="quiz"></section>
+            </div>
+            <section id="spacer">
+                <div id="spacer-wrapper">
+                    <h3 class="hidden">Last Attempt</h3>
+                    <div id="last-attempt"></div>
+                </div>
+            </div>
         </div>
     </main>
 

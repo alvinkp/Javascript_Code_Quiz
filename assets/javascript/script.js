@@ -8,7 +8,7 @@
 var myHighScoreList = document.querySelector("#score-container");
 var myQuizContainer = document.querySelector("#quiz");
 var myTimer = document.querySelector(".timer");
-var myLastAttempt = document.querySelector("#spacer");
+var myLastAttempt = document.querySelector("#spacer-wrapper");
 var timeRemaining = 120;
 var pauseTimer = false;
 var answerAttempt = false;
@@ -328,7 +328,6 @@ function setTopTenScores(scores){
 // Prepare HighScore Array for localstorage
 function prepHSArray(newEntry){
     var existingHighScore = JSON.parse(localStorage.getItem("highScore"));
-    console.log(verifyLocalStorageExists());
     if(verifyLocalStorageExists()){
         // console.log("hello");
         if(existingHighScore.length > 0){
