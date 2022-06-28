@@ -377,7 +377,8 @@ function CreateHighscoreForm(){
     var myDiv = myQuizContainer.lastElementChild;
     myDiv.setAttribute("id", "hs-form");
     
-    addToElement("form", myDiv, "Enter your name here: ");
+    addToElement("p", myDiv, "Enter your name below!");
+    addToElement("form", myDiv, "");
     var myForm = myQuizContainer.lastElementChild;
     myForm.setAttribute("method", "get");
     addToElement("input", myForm, "");
@@ -394,7 +395,7 @@ function showLastAttempt(attempt){
     if(myLastAttempt.lastElementChild.children.length > 0){
         removeElements(myLastAttempt.lastElementChild);
     }
-    addToElement("h4", myLastAttempt.lastElementChild, attempt.name + ": " + attempt.score);
+    addToElement("h4", myLastAttempt.lastElementChild, attempt.score);
 }
 
 // End of Quiz Screen

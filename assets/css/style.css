@@ -3,11 +3,7 @@
 }
 
 body{
-    /* background-color:blueviolet; */
-    /* background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='70.141' height='41' patternTransform='scale(3) rotate(40)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(215,86.7%,67.5%,1)'/><path d='M69.212 40H46.118L34.57 20 46.118 0h23.094l11.547 20zM57.665 60H34.57L23.023 40 34.57 20h23.095l11.547 20zm0-40H34.57L23.023 0 34.57-20h23.095L69.212 0zM34.57 60H11.476L-.07 40l11.547-20h23.095l11.547 20zm0-40H11.476L-.07 0l11.547-20h23.095L46.118 0zM23.023 40H-.07l-11.547-20L-.07 0h23.094L34.57 20z' transform='translate(0.5,0)' stroke-width='6' stroke='hsla(215,86.6%,62%,1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>") */
-    background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='69.641' height='40.5' patternTransform='scale(3) rotate(135)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(199, 98%, 48%, 1)'/><path d='M69.212 40H46.118L34.57 20 46.118 0h23.094l11.547 20zM57.665 60H34.57L23.023 40 34.57 20h23.095l11.547 20zm0-40H34.57L23.023 0 34.57-20h23.095L69.212 0zM34.57 60H11.476L-.07 40l11.547-20h23.095l11.547 20zm0-40H11.476L-.07 0l11.547-20h23.095L46.118 0zM23.023 40H-.07l-11.547-20L-.07 0h23.094L34.57 20z' transform='translate(0.25,0)' stroke-width='3' stroke='hsla(187, 0%, 96%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>")
-    /* background-color: #ffffff;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='%23fc01d0' fill-opacity='0.25'%3E%3Cpath fill-rule='evenodd' d='M5 3.59L1.46.05.05 1.46 3.59 5 .05 8.54l1.41 1.41L5 6.41l3.54 3.54 1.41-1.41L6.41 5l3.54-3.54L8.54.05 5 3.59zM17 2h24v2H17V2zm0 4h24v2H17V6zM2 17h2v24H2V17zm4 0h2v24H6V17z'/%3E%3C/g%3E%3C/svg%3E"); */
+    background: #26547c;
 }
 
 #wrapper{
@@ -20,12 +16,11 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 
 main{
     display: flex;
-    height: 80%;
-    width: 80%;
-    background-color: rgb(255, 255, 255);
+    height: 90%;
+    width: 90%;
     border-radius: 25px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
+
 
 #highscore-wrapper{
     display: flex;
@@ -49,9 +44,10 @@ main{
     color:white;
     font-size: 50px;
     font-family:'Poppins','Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    padding: 10px;
+    padding: 20px;
     border-radius: 25px;
     margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .change-color-yellow h2{
@@ -59,9 +55,10 @@ main{
     color:black;
     font-size: 50px;
     font-family:'Poppins','Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    padding: 10px;
+    padding: 20px;
     border-radius: 25px;
     margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .change-color-red h2{
@@ -69,41 +66,49 @@ main{
     color: white;
     font-size: 50px;
     font-family:'Poppins','Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    padding: 10px;
+    padding: 20px;
     border-radius: 25px;
     margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 #highscore-box{
     display: flex;
-    height: 100%;
+    height: 50%;
     width: 100%;
     justify-content: center;
     text-align: center;
     flex-direction: column;
     align-items: center;
-    background-color: #efd808;
+    background-color: #FFD166;
+    border-radius: 45px;
+    margin: 0px 10px 0px 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 #highscore-box h2{
-    font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Titan One', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 400;
     font-style: oblique;
-    font-size: 35px;
+    font-size: 55px;
     margin-top: 15px;
     margin-bottom: 15px;
+    color:#EF476F;
+    text-shadow: 3px 3px 2px #832037;
 }
 
 #highscore-box button{
-    font-size: 24px;
+    font-size: 18px;
+    font-family:'Titan One', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     width: 25%;
     margin-top: 15px;
     margin-bottom: 15px;
     padding: 5px;
-    background-color: dodgerblue;
-    color:white;
+    background-color: #EF476F;
+    color:black;
     border-radius: 10px;
 }
+
 
 #score-container{
     flex-direction: column;
@@ -113,47 +118,59 @@ main{
 #score-container li{
     list-style: none;
     margin: 0%;
-    font-weight: 300;
+    font-weight: 400;
     font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin-top: 5px;
     margin-bottom: 5px;
+    font-size:20px;
 }
 
 #score-container li:first-child{
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 400;
 }
 
 #quiz{
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    /* background-color: #EF476F; */
+    background-color: #06D6A0;
+    border-radius: 45px;
+    margin: 0px 10px 0px 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 #quiz h1{
-    color:dodgerblue;
+    /* color:#FFD166; */
+    color:#26547c;
     font-size: 36px;
     margin-top: 15px;
     margin-bottom: 30px;
     text-align: center;
-    font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Titan One', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 400;
+    /* text-shadow: 5px 5px 3px black; */
 }
 
 #quiz p{
     font-size: 24px;
     /* font-weight: bolder; */
     margin-bottom: 20px;
-    font-weight: 300;
+    font-weight: 400;
     font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-align: center;
+    /* color: #FCFCFC; */
+    color:#26547c;
 }
 
-#quiz p:last-child{
+#quiz p:last-of-type{
+    font-size: 28px;
     font-weight: 400;
-    font-size: 24px;
+    font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #quiz button{
@@ -161,10 +178,10 @@ main{
     width: 50%;
     margin-bottom: 15px;
     padding: 10px;
-    background-color: dodgerblue;
-    color:white;
+    background-color: #FFD166;
+    color:#26547c;
     border-radius: 10px;
-    font-weight: 300;
+    font-weight: 400;
     font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -178,8 +195,8 @@ main{
 
 #hs-form button{
     font-size: 20px;
-    background-color: dodgerblue;
-    color: white;
+    background-color: #FFD166;
+    color: #26547c;
     border-radius: 10px;
     padding: 0px 5px 0px 5px;
     margin: 15px 0px 0px 0px;
@@ -190,30 +207,44 @@ main{
     display: table;
 }
 
-#spacer-wrapper{
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+#last-attempt{
+    font-family:'Roboto','Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #spacer{
-    width: 25%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    flex-direction: row;
     font-weight: 300;
-    font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'TItan One', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: oblique;
-    background-color: #efd808;
+    width: 25%;
+}
+
+#spacer-wrapper{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    background-color: #FFD166;
+    border-radius: 45px;
+    margin: 0px 10px 0px 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 #spacer h3{
-    font-size: 35px;
+    font-size: 48px;
+    color:#EF476F;
+    text-shadow: 3px 3px 2px #832037;
 }
 
 #spacer h4{
-    font-size: 24px;
+    font-size: 64px;
 }
 
 /* Play shake animation for anything that has the shake-error class */
